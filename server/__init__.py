@@ -1,5 +1,6 @@
 from flask import Flask
 import os
+from flask_cors import CORS
 
 
 def create_app():
@@ -12,5 +13,5 @@ def create_app():
         pass
 
     app.register_blueprint(public.public)
-
+    CORS(app)
     return app
