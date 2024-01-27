@@ -35,7 +35,7 @@ function News() {
         
          
             {newsData.map((newsItem, index) => (
-              <Card className="d-flex justify-content-center" key={index}>
+              <Card className="flex justify-content-center w-full" key={index}>
                 
               <a href={newsItem.url} target="_blank" rel="noopener noreferrer">                
                  <div className='flex '><img className="flex-shrink-1 w-12 h-12" src={newsItem.urlToImage}/>
