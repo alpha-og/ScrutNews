@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import axios from "axios";
 
 export default function NewsTitleInput() {
     const [newsInput, setNewsInput] = useState<string>("");
-    const [isFake, setIsFake] = useState<boolean>(false);
+    const [isFake, setIsFake] = useState<boolean | null>(null); // Change default state to null
 
     const detectFakeNews = () => {
-        const isFakeNews = Math.random() < 0.5;
-        setIsFake(isFakeNews);
+        axios.post("http://192.168.246.104:8080/model", { text: newsInput }) // Make a POST request to your Flask backend
+            .then(response => {
+                setIsFake(response.data.result); // Update state with the result from the API
+            })
+            .catch(error => {
+                console.error("Error detecting fake news:", error);
+                setIsFake(null); // Set state back to null in case of an error
+            });
     };
 
     return (
@@ -24,7 +31,7 @@ export default function NewsTitleInput() {
             {isFake !== null && (
                 <div className="result">
                     {isFake ? (
-                        <p className="fake text-red-800" >This news might be fake!</p>
+                        <p className="fake text-red-800">This news might be fake!</p>
                     ) : (
                         <p className="legit text-green-800">This news seems legitimate.</p>
                     )}
