@@ -16,6 +16,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.preprocessing.text import one_hot
 
 # path = "./datasets/train.csv"
+# checkpoint_path = "training_1/checkpoints"
 def processData(path):
     df = pd.read_csv(path)
 
@@ -35,6 +36,8 @@ def processData(path):
 
     x_test_enc_padded = pad_sequences(x_test_enc,padding='pre',maxlen=sent_length)
     return x_train, y_train, x_test, y_test
+
+def 
 
 def create_model():
     model = tf.keras.Sequential([
