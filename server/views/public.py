@@ -15,10 +15,9 @@ def model_in():
     model = load_model(
         os.path.join(os.getcwd() + "/server/model/training_1/checkpoints")
     )
-    # input_ = request.json()
-    inp = "title"
+    input_ = request.json()
 
-    input_proces = process_web(inp)
+    input_proces = process_web(input_)
 
     out = model.predict(input_proces)
 
