@@ -24,3 +24,5 @@ datasets
 *.njsproj
 *.sln
 *.sw?
+.direnv/
+.envrc
