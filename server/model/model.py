@@ -19,8 +19,8 @@ from tensorflow.keras.preprocessing.text import one_hot
 from tensorflow.keras.optimizers.legacy import Adam
 
 
-# path = "./datasets/train.csv"
-# checkpoint_path = "training_1/checkpoints"
+path = f"{os.getcwd()}/server/model/datasets/train.csv"
+checkpoint_path = f"{os.getcwd()}/server/model/training_1/checkpoints"
 def processData(path):
     df = pd.read_csv(path)
 
@@ -39,33 +39,42 @@ def processData(path):
     x_train_enc_padded = pad_sequences(x_train_enc, padding="pre", maxlen=sent_length)
 
     x_test_enc_padded = pad_sequences(x_test_enc, padding="pre", maxlen=sent_length)
-    return x_train, y_train, x_test, y_test
+    return x_train_enc_padded, x_test_enc_padded,y_train, y_test
 
 
-def process_web(text):
-    x_train_enc = [one_hot(text, 10000)]
-
+def encode_input_data(x):
+    x_enc = [one_hot(words, 10000) for words in x]
     sent_length = 10
-    x_train = pad_sequences(x_train_enc, padding="pre", maxlen=sent_length)
+    x_padded = pad_sequences(x_enc, padding="pre", maxlen=sent_length)
+    return x_padded
 
-    return x_train
 
-
-def create_model():
+def create_seq_model():
     model = tf.keras.Sequential(
         [
-            keras.layers.Dense(512, activation="sigmoid", input_shape=(10,)),
+            keras.layers.Dense(512, input_shape=(10,)),
             keras.layers.Dropout(0.2),
-            keras.layers.Dense(1),
+            keras.layers.Dense(1, activation="sigmoid"),
         ]
     )
     model.compile(
-        optimizer=Adam(lr=1e-3),
+        optimizer=Adam(learning_rate=1e-3),
         loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
         metrics=[tf.keras.metrics.BinaryAccuracy()],
     )
     return model
 
+def create_rnn_model():
+    embedding_vector_features=40
+
+    rnn = Sequential()
+    rnn.add(Embedding(10000,embedding_vector_features,input_length=10))
+    rnn.add(SimpleRNN(100,return_sequences=False))
+
+    rnn.add(Dense(1, activation='sigmoid'))
+
+    rnn.summary()
+    return rnn
 
 def train(create_model, checkpoint_path, x_train, y_train, x_test, y_test):
     model = create_model()
@@ -91,7 +100,15 @@ def evaluate(model, x_test, y_test):
 
 
 def load_model(checkpoint_path):
-    checkpoint_dir = os.path.dirname(checkpoint_path)
     model_loaded = create_model()
     model_loaded.load_weights(checkpoint_path)
     return model_loaded
+
+def load_rnn_model(path):
+    return keras.models.load_model(path)
+
+
+# print(os.listdir())
+# x_train, y_train, x_test, y_test = processData(path)
+# model = load_model(checkpoint_path)
+# print(model.predict(x_train))
