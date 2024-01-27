@@ -12,7 +12,7 @@ node_modules
 dist
 dist-ssr
 *.local
-
+__pycache__
 datasets
 # Editor directories and files
 .vscode/*
