@@ -1,4 +1,6 @@
-from flask import Blueprint, Flask
+import os
+from flask import Blueprint, Flask, request, jsonify
+from ..model.model import process_web, load_model
 
 public = Blueprint("public", __name__, url_prefix="/")
 
@@ -10,4 +12,16 @@ def index():
 
 @public.route("/model", methods=["GET"])
 def model_in():
-    return "Hi"
+    model = load_model(
+        os.path.join(os.getcwd() + "/server/model/training_1/checkpoints")
+    )
+    # input_ = request.json()
+    inp = "title"
+
+    input_proces = process_web(inp)
+
+    out = model.predict(input_proces)
+
+    print(out)
+
+    return "hi"

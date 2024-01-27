@@ -16,6 +16,7 @@ from tensorflow.keras.layers import Embedding
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.preprocessing.text import one_hot
+from tensorflow.keras.optimizers.legacy import Adam
 
 
 # path = "./datasets/train.csv"
@@ -41,16 +42,25 @@ def processData(path):
     return x_train, y_train, x_test, y_test
 
 
+def process_web(text):
+    x_train_enc = [one_hot(text, 10000)]
+
+    sent_length = 10
+    x_train = pad_sequences(x_train_enc, padding="pre", maxlen=sent_length)
+
+    return x_train
+
+
 def create_model():
     model = tf.keras.Sequential(
         [
-            keras.layers.Dense(512, activation="relu", input_shape=(10,)),
+            keras.layers.Dense(512, activation="sigmoid", input_shape=(10,)),
             keras.layers.Dropout(0.2),
-            keras.layers.Dense(10),
+            keras.layers.Dense(1),
         ]
     )
     model.compile(
-        optimizer="adam",
+        optimizer=Adam(lr=1e-3),
         loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
         metrics=[tf.keras.metrics.SparseCategoricalAccuracy()],
     )
@@ -84,3 +94,4 @@ def load_model(checkpoint_path):
     checkpoint_dir = os.path.dirname(checkpoint_path)
     model_loaded = create_model()
     model_loaded.load_weights(checkpoint_path)
+    return model_loaded
