@@ -14,7 +14,7 @@ function News() {
   async function getNewsData() {
     setLoading(true);
     try {
-      const resp = await axios.get("https://newsapi.org/v2/everything?q=bitcoin&apiKey=b738ed2669c54125aae96fba7c1107d5&pageSize=10");
+      const resp = await axios.get("https://newsapi.org/v2/everything?q=trade&apiKey=b738ed2669c54125aae96fba7c1107d5&pageSize=10");
       setNewsData(resp.data.articles);
     } catch (error) {
       setError("Failed to fetch news data. Please try again later.");
