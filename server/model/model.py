@@ -19,6 +19,7 @@ from tensorflow.keras.preprocessing.text import one_hot
 
 
 # path = "./datasets/train.csv"
+# checkpoint_path = "training_1/checkpoints"
 def processData(path):
     df = pd.read_csv(path)
 
