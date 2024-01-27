@@ -26,3 +26,4 @@ datasets
 *.sw?
 .direnv/
 .envrc
+*.pyc
