@@ -37,8 +37,6 @@ def processData(path):
     x_test_enc_padded = pad_sequences(x_test_enc,padding='pre',maxlen=sent_length)
     return x_train, y_train, x_test, y_test
 
-def 
-
 def create_model():
     model = tf.keras.Sequential([
     keras.layers.Dense(512, activation = "relu", input_shape=(10, )),
