@@ -4,13 +4,13 @@ import { Input } from "./ui/input";
 import axios from "axios";
 
 export default function NewsTitleInput() {
-    const [newsInput, setNewsInput] = useState<string>("");
-    const [isFake, setIsFake] = useState<boolean | null>(null); // Change default state to null
+    const [newsInput, setNewsInput] = useState("");
+    const [isFake, setIsFake] = useState(null);
 
     const detectFakeNews = () => {
-        axios.post("http://192.168.246.104:8080/model", { text: newsInput }) // Make a POST request to your Flask backend
+        axios.post("http://192.168.246.104:8080/model", { text: newsInput })
             .then(response => {
-                setIsFake(response.data.result); // Update state with the result from the API
+                setIsFake(response.data.trust_value); // Update state with the result from the API
             })
             .catch(error => {
                 console.error("Error detecting fake news:", error);
@@ -40,3 +40,4 @@ export default function NewsTitleInput() {
         </div>
     );
 }
+
