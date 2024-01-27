@@ -59,11 +59,7 @@ def create_model():
             keras.layers.Dense(1),
         ]
     )
-    model.compile(
-        optimizer=Adam(lr=1e-3),
-        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-        metrics=[tf.keras.metrics.SparseCategoricalAccuracy()],
-    )
+    model.compile(optimizer = "adam", loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),metrics=[tf.keras.metrics.BinaryAccuracy()])
     return model
 
 
