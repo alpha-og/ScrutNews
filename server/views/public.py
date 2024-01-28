@@ -8,6 +8,7 @@ news_api = NewsDataApiClient(apikey="pub_37199c2a29d903fcc6895ca7992577b14d45f")
 
 model = load_rf_model()
 
+
 @public.route("/")
 def index():
     return "Hello world"
