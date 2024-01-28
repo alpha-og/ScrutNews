@@ -1,21 +1,25 @@
-import './News.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {
+  Card,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card"
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function News() {
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
 
   async function getNewsData() {
     setLoading(true);
     try {
-      const resp = await axios.get("https://newsapi.org/v2/everything?q=tech&apiKey=b738ed2669c54125aae96fba7c1107d5&pageSize=10");
-      setNewsData(resp.data.articles);
+      const resp = await axios.get(`http://192.168.0.56:8080/fetch_news?page=${page}`);
+      setNewsData(prevData => [...prevData, ...resp.data]);
+      setPage(prevPage => prevPage + 1);
     } catch (error) {
       setError("Failed to fetch news data. Please try again later.");
     }
@@ -26,30 +30,35 @@ function News() {
     getNewsData();
   }, []);
 
+  const fetchMoreData = () => {
+    getNewsData();
+  };
+
   return (
-    <div className="News">
+    <div className="w-full flex flex-wrap">
       <header className="News-header">
-        {loading ? "Loading..." : error ? <div>{error}</div> : (
-          <Container>
-            {newsData.map((newsItem, index) => (
-              <Row className="d-flex justify-content-center" key={index}>
-                <Col xs={12} className="mt-5 w-500">
-                  <a href={newsItem.url} target="_blank" rel="noopener noreferrer">
-                    <Card>
-                      <Card.Title className="my-3">{newsItem.title}</Card.Title>
-                      <Card.Img src={newsItem.urlToImage} />
-                      <Card.Body>
-                        <Card.Text>
-                          {newsItem.description}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </a>
-                </Col>
-              </Row>
-            ))}
-          </Container>
-        )}
+        <InfiniteScroll
+          dataLength={newsData.length}
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+        >
+          {newsData.map((newsItem, index) => (
+            <Card className="flex justify-content-center w-full" key={index}>
+              <a href={newsItem.url} target="_blank" rel="noopener noreferrer">                
+                <div className='flex '>
+                  <img className="flex-shrink-1 w-12 h-12" src={newsItem.image_url}/>
+                  <div className='flex-grow-1'>
+                    <CardTitle className="my-3">{newsItem.title}</CardTitle>
+                    <CardDescription>
+                      {newsItem.description}
+                    </CardDescription>
+                  </div>
+                </div>
+              </a>
+            </Card>
+          ))}
+        </InfiniteScroll>
       </header>
     </div>
   );

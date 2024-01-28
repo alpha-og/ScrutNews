@@ -9,7 +9,7 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
-  
+  import InfiniteScroll from 'react-infinite-scroll-component';
   
 function News() {
   const [newsData, setNewsData] = useState([]);
@@ -19,8 +19,8 @@ function News() {
   async function getNewsData() {
     setLoading(true);
     try {
-      const resp = await axios.get("https://newsapi.org/v2/everything?q=blockchain&apiKey=b738ed2669c54125aae96fba7c1107d5&pageSize=10");
-      setNewsData(resp.data.articles);
+      const resp = await axios.get("http://192.168.0.104:8080/fetch_news");
+      setNewsData(resp.data);
     } catch (error) {
       setError("Failed to fetch news data. Please try again later.");
     }
@@ -32,13 +32,25 @@ function News() {
   return (
     <div className="w-full flex flex-wrap">
       <header className="News-header">
+      <InfiniteScroll
+          dataLength={this.state.items.length}
+          next={this.fetchMoreData}
+          hasMore={true}
+          loader={<h4>Loading...</h4>}
+        >
+          {this.state.items.map((i, index) => (
+            <div style={style} key={index}>
+              div - #{index}
+            </div>
+          ))}
+        </InfiniteScroll>
         
          
             {newsData.map((newsItem, index) => (
               <Card className="flex justify-content-center w-full" key={index}>
                 
               <a href={newsItem.url} target="_blank" rel="noopener noreferrer">                
-                 <div className='flex '><img className="flex-shrink-1 w-12 h-12" src={newsItem.urlToImage}/>
+                 <div className='flex '><img className="flex-shrink-1 w-12 h-12" src={newsItem.image_url}/>
                   <div className='flex-grow-1'><CardTitle className="my-3">{newsItem.title}</CardTitle>
                   
                   <CardDescription>
