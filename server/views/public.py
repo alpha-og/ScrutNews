@@ -50,3 +50,20 @@ def fetch_news():
         except Exception:
             article["cred"] = "NotMeasurable"
     return response["results"]
+
+
+@public.route("/fetch_news_scroll", methods=["GET"])
+def fetch_news_scroll():
+    response = news_api.news_api(q="tech")
+
+    for article in response["results"]:
+        try:
+            input_ = article["description"]
+            if type(input_) != list:
+                input_ = [input_]
+            input_processed = encode_input_data(input_)
+            out = model.predict(input_processed)
+            article["cred"] = f"{out[0][0]*100}"
+        except Exception:
+            article["cred"] = "NotMeasurable"
+    return response["results"]
