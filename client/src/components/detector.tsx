@@ -8,7 +8,7 @@ export default function NewsTitleInput() {
     const [isFake, setIsFake] = useState(null);
 
     const detectFakeNews = () => {
-        axios.post("http://192.168.150.104:8080/model", { text: newsInput })
+        axios.post("http://192.168.0.56:8080/model", { text: newsInput })
             .then(response => {
                 setIsFake(response.data.trust_value); // Update state with the result from the API
             })
