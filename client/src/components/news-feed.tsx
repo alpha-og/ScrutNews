@@ -18,7 +18,7 @@ type responseData = {
   image_url: string;
   keywords: null | string[];
   language: "english";
-  url: string;
+  link: string;
   pubDate: string;
   sentiment?: "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS";
   sentiment_stats?: "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS";
@@ -68,7 +68,7 @@ export default function NewsFeed() {
       >
         {newsData.map((newsItem, index) => (
           <a
-            href={newsItem.url}
+            href={newsItem.link}
             target="_blank"
             rel="noopener noreferrer"
             key={index}
