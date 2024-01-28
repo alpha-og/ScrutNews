@@ -17,13 +17,20 @@ import pickle
 
 cwd = os.getcwd()
 
-# df = pd.read_csv(f"{os.getcwd()}/server/model/datasets/train.csv").dropna()
-# df["title"]=df["title"].apply(lambda x: re.sub("[^a-zA-Z\u00C0-\u017F]"," ",x))
-# df["title"]=df["title"].apply(lambda x: x.lower())
-#
-# X = df["title"]
-# y = df["label"]
-# X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2)
+
+def loadData():
+    df = (
+        pd.read_csv(f"{os.getcwd()}/server/model/datasets/train.csv")
+        .sample(frac=1)
+        .dropna()
+    )
+    df["title"] = df["title"].apply(lambda x: re.sub("[^a-zA-Z\u00C0-\u017F]", " ", x))
+    df["title"] = df["title"].apply(lambda x: x.lower())
+    df["label"] = df["label"].apply(lambda x: int(not x))
+
+    X = df["title"]
+    y = df["label"]
+    return train_test_split(X, y, test_size=0.2, random_state=1)
 
 
 def createEncoder(X_train):
@@ -68,6 +75,8 @@ def encodeData(X_test):
     X_test_bow = cv.transform(X_test).toarray()
     return X_test_bow
 
+
+# X_train,X_test,y_train,y_test = loadData()
 
 # rf = train_rf_model(X_train,y_train)
 # X_test_bow = encodeData(X_test)
