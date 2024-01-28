@@ -13,5 +13,5 @@ def create_app():
         pass
 
     app.register_blueprint(public.public)
-    CORS(app)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     return app
