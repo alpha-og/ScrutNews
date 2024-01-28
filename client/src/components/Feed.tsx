@@ -17,7 +17,7 @@ function News() {
   async function getNewsData() {
     setLoading(true);
     try {
-      const resp = await axios.get(`http://192.168.0.56:8080/fetch_news?page=${page}`);
+      const resp = await axios.get(`http://192.168.0.56:8080/api/news?page=${page}`);
       setNewsData(prevData => [...prevData, ...resp.data]);
       setPage(prevPage => prevPage + 1);
     } catch (error) {
