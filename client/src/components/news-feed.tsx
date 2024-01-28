@@ -57,41 +57,46 @@ export default function NewsFeed() {
   };
 
   return (
-    <Card className="w-full flex flex-col">
-      <CardTitle className="text-lg text-center">News Feed</CardTitle>
-      <InfiniteScroll
-        dataLength={newsData.length}
-        next={fetchMoreData}
-        hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
-        className="flex flex-col gap-2"
-      >
-        {newsData.map((newsItem, index) => (
-          <a
-            href={newsItem.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            key={index}
+    
+      <Card className="w-full flex flex-col h-2/6 ">
+        <CardTitle className="text-lg text-center border ">News Feed</CardTitle>
+        <div className="h-[calc(100vh-4rem)] overflow-y-scroll">
+          <InfiniteScroll
+            dataLength={newsData.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            className="flex flex-col gap-2"
           >
-            <Card className="flex gap-2 items-center w-max h-24">
-              {newsItem ? (
-                <img
-                  className="flex-shrink-1 w-12 h-12"
-                  src={newsItem.image_url}
-                />
-              ) : (
-                <CiImageOff />
-              )}
-              <div className="flex flex-col w-[36rem]">
-                <CardTitle className="my-3">{newsItem.title}</CardTitle>
-                <CardDescription className="truncate">
-                  {newsItem.description}
-                </CardDescription>
-              </div>
-            </Card>
-          </a>
-        ))}
-      </InfiniteScroll>
-    </Card>
+            {newsData.map((newsItem, index) => (
+              <a
+                href={newsItem.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={index}
+              >
+                <Card className="flex gap-2 items-center w-max h-24">
+                  {newsItem ? (
+                    <img
+                      className="flex-shrink-1 w-12 h-12"
+                      src={newsItem.image_url}
+                    />
+                  ) : (
+                    <CiImageOff />
+                  )}
+                  <div className="flex flex-col w-[36rem]">
+                    <CardTitle className="my-3">{newsItem.title}</CardTitle>
+                    <CardDescription className="truncate">
+                      {newsItem.description}
+                    </CardDescription>
+                  </div>
+                </Card>
+              </a>
+            ))}
+          </InfiniteScroll>
+        </div>
+      </Card>
+    
   );
 }
+
