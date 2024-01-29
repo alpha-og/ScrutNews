@@ -2,7 +2,7 @@
 
 News filtering and analysis tool that leverages machine learning
 
-![Demo](./ScrutNews.gif)
+![demo](https://cdn.discordapp.com/attachments/1181882186551545876/1201578897909760101/ScrutNews.gif?ex=65ca548d&is=65b7df8d&hm=9b40dfdf8ae885369a8b01061e5b6a5a39a706c438db172941634a3c8a45ea12&)
 
 ## Features
 
