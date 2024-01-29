@@ -29,7 +29,6 @@ News Summary Generation: Users can provide a link to a news article, and the sys
 │       │   └── ui
 │       ├── lib
 │       └── pages
-├── instance
 └── server
     ├── model
     │   ├── datasets
