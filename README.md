@@ -52,9 +52,11 @@ Execute the shell script `run.sh`/ `run.bat` from the project root directory, de
 
 ### Manual Setup
 
+PS: if you're on windows, replace `&&` with `;`
+
 If you'd like to run the client and server instances manually, you can use these steps:
 
--   **Client** — navigate to the client folder and execute the command `npm install && npm run dev`
+-   **Client** — navigate to the client folder and execute the command `npm install && npm run dev` 
 -   **Server** — from the root directory of the project, execute the following commands (in the same sequence):
     1. Export the path variables for flask — `export FLASK_APP=server && export FLASK_DEBUG=1`
     2. Run the server — `flask run`
