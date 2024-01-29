@@ -2,7 +2,7 @@
 
 News filtering and analysis tool that leverages machine learning
 
-![demo](https://cdn.discordapp.com/attachments/1181882186551545876/1201578897909760101/ScrutNews.gif?ex=65ca548d&is=65b7df8d&hm=9b40dfdf8ae885369a8b01061e5b6a5a39a706c438db172941634a3c8a45ea12&)
+https://github.com/alpha-og/ScrutNews/assets/76057001/b826c4be-906a-45c0-bf9a-13dc5f71c538
 
 ## Features
 
@@ -18,19 +18,30 @@ The tool provides a live news feed feature to keep users updated with the latest
 
 News Summary Generation: Users can provide a link to a news article, and the system generates a concise summary of the article's content. This functionality utilizes web scraping techniques to extract relevant information from the provided link and then applies text summarization algorithms to condense the content into a brief summary.
 
-## Client
-
-The frontend that enables interaction with the API is primarily composed of three components:
-
-1. React JS
-2. [tailwindcss](https://tailwindcss.com/)
-3. [shadcn](https://ui.shadcn.com/)
-
-We've used react as the foundation for the website UI. Tailwindcss and Shadcn enhance the overall aesthetics and UX of the design, making use of utility classes and flexible components.
+## Project Architecture
+```
+.
+├── client
+│   ├── public
+│   └── src
+│       ├── assets
+│       ├── components
+│       │   └── ui
+│       ├── lib
+│       └── pages
+└── server
+    ├── model
+    │   ├── datasets
+    │   ├── random_forests
+    │   └── rnn
+    └── views
+```
 
 ## Getting Started
 
 To set up and run the project locally, begin by cloning this repository to your local machine using `git clone https://github.com/alpha-og/ScrutNews/`.
+
+In addition to the steps below, please make sure the `BASE_URL` in the `constants.ts` file located in the assets directory of the client folder matches the IP and  of the server (the default is `127.0.0.1:8080`)
 
 ### Quickstart
 
@@ -47,6 +58,16 @@ If you'd like to run the client and server instances manually, you can use these
 -   **Server** — from the root directory of the project, execute the following commands (in the same sequence):
     1. Export the path variables for flask — `export FLASK_APP=server && export FLASK_DEBUG=1`
     2. Run the server — `flask run`
+
+## Client
+
+The frontend that enables interaction with the API is primarily composed of three components:
+
+1. React JS
+2. [tailwindcss](https://tailwindcss.com/)
+3. [shadcn](https://ui.shadcn.com/)
+
+We've used react as the foundation for the website UI. Tailwindcss and Shadcn enhance the overall aesthetics and UX of the design, making use of utility classes and flexible components.
 
 ## Server
 
