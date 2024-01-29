@@ -2,7 +2,8 @@
 
 News filtering and analysis tool that leverages machine learning
 
-https://github.com/alpha-og/ScrutNews/assets/76057001/dd39641b-9549-4b5e-93c0-040cfefde5da
+https://github.com/alpha-og/ScrutNews/assets/76057001/b826c4be-906a-45c0-bf9a-13dc5f71c538
+
 
 ## Features
 
