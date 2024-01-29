@@ -1,8 +1,5 @@
 pip install -r requirements.txt
+start /b flask --app=server run --port=8080
 cd client
-npm i
+start /b npm i
 start /b npm run dev
-cd ../
-set FLASK_APP="server"
-set FLASK_DEBUG=1
-flask run

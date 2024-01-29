@@ -7,6 +7,7 @@ import {
     CardTitle,
   } from "@/components/ui/card"
   import InfiniteScroll from 'react-infinite-scroll-component';
+import { BASE_URL } from '@/assets/constants';
   
 function News() {
   const [newsData, setNewsData] = useState([]);
@@ -16,7 +17,7 @@ function News() {
   async function getNewsData() {
     setLoading(true);
     try {
-      const resp = await axios.get("http://192.168.0.104:8080/fetch_news");
+      const resp = await axios.get(`${BASE_URL}fetch_news`);
       setNewsData(resp.data);
     } catch (error) {
       setError("Failed to fetch news data. Please try again later.");
