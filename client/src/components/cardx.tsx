@@ -3,10 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import {
     Card,
-    CardContent,
     CardDescription,
-    CardFooter,
-    CardHeader,
     CardTitle,
   } from "@/components/ui/card"
   import InfiniteScroll from 'react-infinite-scroll-component';
